@@ -1,0 +1,13 @@
+#     _____ _   ___     __
+#    | ____| \ | \ \   / /
+#    |  _| |  \| |\ \ / / 
+#   _| |___| |\  | \ V /  
+#  (_)_____|_| \_|  \_/   
+
+MONGO_HOST=db
+MONGO_PORT=27017
+MONGO_USER=root
+MONGO_PASS=root
+MONGO_SRV=False
+BOT_TOKEN=TOKEN HERE
+BOT_PREFIX=.

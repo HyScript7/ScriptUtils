@@ -1,0 +1,22 @@
+version: "3.9"
+services:
+  bot:
+    build: ./app
+    restart: always
+    environment:
+      MONGO_HOST: db
+      MONGO_PORT: 27017
+      MONGO_USER: root
+      MONGO_PASS: root
+      BOT_TOKEN: ""
+      BOT_PREFIX: .
+    links:
+      - db
+    depends_on:
+      - db
+  db:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
