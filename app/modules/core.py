@@ -94,7 +94,7 @@ class Core(commands.Cog):
     )
     async def _version(self, ctx: commands.Context):
         e = discord.Embed(color=int("00FF00", 16), title="ScriptUtils - Version")
-        e.add_field(name="Version", value="ScriptUtils Version 1.3", inline=False)
+        e.add_field(name="Version", value=f"ScriptUtils Version {self.bot.suVersion}", inline=False)
         await ctx.send(embed=e)
 
 

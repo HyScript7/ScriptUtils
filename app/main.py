@@ -18,6 +18,8 @@ from discord.ext import commands
 from decouple import config
 from pymongo import MongoClient
 
+__version__ = "1.0"
+
 TOKEN = config("BOT_TOKEN", "").strip()
 PREFIX = config("BOT_PREFIX", ".").strip()
 MONGO_USER = config("MONGO_USER", "root").strip()
@@ -45,16 +47,17 @@ class suDatabase:
 
 class suBot(commands.Bot):
     def __init__(self) -> None:
-        intents = discord.Intents.default()
-        intents.message_content = True
-        intents.members = True
+        intents = discord.Intents.all() # TODO: Change this in the first release version to really only enable what it needs
         super().__init__(PREFIX, intents=intents)
         self.Synced = False
         self.DB = suDatabase(MONGO_SRV, MONGO_HOST, MONGO_PORT, MONGO_USER, MONGO_PASS)
+        self.suVersion = __version__
 
     async def loadModules(self):
         Modules = []
         for i in os.listdir("modules"):
+            if i.startswith("__"):
+                continue
             Modules.append("modules." + i.strip(".py"))
         for i in self.Modules:
             print(f"Extension {i} is loading")
@@ -77,8 +80,10 @@ bot = suBot()
 if __name__ == "__main__":
     from sys import exit
 
+    if (not len(TOKEN) or TOKEN.count(".") != 2) if type(TOKEN) is str else True:
+        exit("Invalid bot token has been provided!")
+    
     asyncio.run(bot.loadModules())
-    if not len(TOKEN):
-        exit("Improper bot token has been provided!")
+
     bot.run(TOKEN)
     exit(0)
