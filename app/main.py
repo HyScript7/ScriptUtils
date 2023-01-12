@@ -117,6 +117,7 @@ root_logger.addHandler(log_console)
 
 if __name__ == "__main__":
     from sys import exit
+    logging.error(f"ScriptUtils v{__version__}")
 
     if (not len(TOKEN) or TOKEN.count(".") != 2) if type(TOKEN) is str else True:
         logging.error("Invalid token: Token failed check")
