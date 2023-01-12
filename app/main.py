@@ -21,7 +21,6 @@ import discord
 import models
 from decouple import config
 from discord.ext import commands
-from pymongo import MongoClient
 
 __version__ = "1.0"
 
@@ -34,30 +33,18 @@ MONGO_PORT = config("MONGO_PORT", "27017").strip()
 MONGO_SRV = config("MONGO_SRV", "False").lower() == "true"
 
 
-class suDatabase:
-    def __init__(
-        self,
-        MONGO_SRV: bool,
-        MONGO_HOST: str,
-        MONGO_PORT: str,
-        MONGO_USER: str,
-        MONGO_PASS: str,
-    ) -> None:
-        self.dbClient = MongoClient(
-            f"mongodb{'+srv' if MONGO_SRV else ''}://{MONGO_USER}:{MONGO_PASS}@{MONGO_HOST}{(':'+MONGO_PORT) if not MONGO_SRV else ''}",
-            serverSelectionTimeoutMS=5000,
-        )
-        self.dbScriptUtils = self.dbClient["ScriptUtils"]
-
-
 class suBot(commands.Bot):
+    """
+    suBot builds on top of discord.ext.commands.Bot to simplify integration in the ScriptUtils project.
+    """
+
     def __init__(self) -> None:
         intents = (
             discord.Intents.all()
         )  # TODO: Change this in the first release version to really only enable what it needs
         super().__init__(PREFIX, intents=intents)
         self.Synced = False
-        self.DB = suDatabase(MONGO_SRV, MONGO_HOST, MONGO_PORT, MONGO_USER, MONGO_PASS)
+        self.DB = models.suDatabase(MONGO_SRV, MONGO_HOST, MONGO_PORT, MONGO_USER, MONGO_PASS)
         self.suVersion = __version__
 
     async def loadModules(self):
@@ -117,6 +104,7 @@ root_logger.addHandler(log_console)
 
 if __name__ == "__main__":
     from sys import exit
+
     logging.error(f"ScriptUtils v{__version__}")
 
     if (not len(TOKEN) or TOKEN.count(".") != 2) if type(TOKEN) is str else True:
