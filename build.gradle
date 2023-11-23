@@ -1,0 +1,46 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.1.5'
+	id 'io.spring.dependency-management' version '1.1.3'
+}
+
+group = 'me.hyscript7'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+jar {
+	manifest {
+		attributes 'Main-Class': 'me.hyscript7.scriptutils.DiscordbotApplication'
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	set('springShellVersion', "3.1.5")
+}
+
+dependencies {
+	implementation 'org.springframework.shell:spring-shell-starter'
+	implementation 'net.dv8tion:JDA:5.0.0-beta.18'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.shell:spring-shell-dependencies:${springShellVersion}"
+	}
+}
+
+tasks.named('bootBuildImage') {
+	builder = 'paketobuildpacks/builder-jammy-base:latest'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
