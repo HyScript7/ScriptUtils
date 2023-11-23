@@ -1,13 +1,11 @@
 package me.hyscript7.scriptutils;
 
-import me.hyscript7.scriptutils.modules.core.listeners.ReadyListener;
 import me.hyscript7.scriptutils.framework.SlashCommandHandler;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.exceptions.InvalidTokenException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,18 +16,15 @@ import java.util.List;
 public class DiscordConfig {
 
     private final List<ListenerAdapter> listeners;
-
-    private final Logger logger = LoggerFactory.getLogger(ReadyListener.class);
+    @Value("${bot.token}")
+    private String botToken;
 
     public DiscordConfig(List<ListenerAdapter> listeners) {
         this.listeners = listeners;
     }
 
-    @Value("${bot.token}")
-    private String botToken;
-
     @Bean
-    public JDA jdabuilder(SlashCommandHandler slashCommandHandler) {
+    public JDABuilder jdabuilder(SlashCommandHandler slashCommandHandler) {
         JDABuilder builder = JDABuilder.createDefault(botToken);
 
         builder.enableIntents(GatewayIntent.MESSAGE_CONTENT);
@@ -39,7 +34,15 @@ public class DiscordConfig {
 
         // Register slash command handler
         builder.addEventListeners(slashCommandHandler);
+        return builder;
+    }
 
-        return builder.build();
+    @Bean
+    public JDA jda(JDABuilder jdabuilder) {
+        try {
+            return jdabuilder.build();
+        } catch (InvalidTokenException e) {
+            throw new RuntimeException("Could not authenticate!", e);
+        }
     }
 }
