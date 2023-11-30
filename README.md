@@ -129,7 +129,7 @@ _For more examples, please refer to the <a href="https://github.com/HyScript7/Sc
 - [ ] Developer: Commands that let you create a server without having to navigate tons of menus
 - [ ] Version Control: Allows you to version changes made to your server and create snapshots (backups)
 - [ ] Network Sync: Allows you to sync roles, bans, updates, etc... across two or more servers
-- [ ] Database: *Implementation unclear*
+- [ ] Database: _Implementation unclear_
 - [ ] Whitelist: Allows you to restrict access to a server (inverse banlist)
 
 See the [open issues](https://github.com/HyScript7/ScriptUtils/issues) for a full list of proposed features (and known issues).
@@ -158,6 +158,8 @@ Don't forget to give the project a star! Thanks again!
 ## License
 
 Distributed under the MIT License. See the `LICENSE` file for more information.
+
+<div><i>ScriptUtils Logo CC-BY <a href="https://github.com/mobilex1122">mobilex1122</a></i></div>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -199,4 +201,3 @@ HyScript7 - Discord: @hyscript7 - Email: hyscript7@gmail.com
 [gradle-url]: https://gradle.org/
 [spring-url]: https://spring.io/
 [jda-url]: https://jda.wiki/
-
