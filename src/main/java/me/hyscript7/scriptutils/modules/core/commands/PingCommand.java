@@ -14,7 +14,7 @@ public class PingCommand implements SlashCommand {
         if (event.isAcknowledged()) {
             return;
         }
-        event.reply("Ping!").queue();
+        event.reply("[Pong](https://hooriahic.github.io/pingponggame/)!").queue();
     }
 
     @Override
