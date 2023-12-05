@@ -1,6 +1,6 @@
 package me.hyscript7.scriptutils;
 
-import me.hyscript7.scriptutils.framework.SlashCommandHandler;
+import me.hyscript7.scriptutils.commandmng.SlashCommandHandler;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.exceptions.InvalidTokenException;
