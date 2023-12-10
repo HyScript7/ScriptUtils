@@ -1,6 +1,5 @@
 package me.hyscript7.scriptutils;
 
-import me.hyscript7.scriptutils.commandmng.SlashCommandHandler;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.exceptions.InvalidTokenException;
@@ -10,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.EnumSet;
 import java.util.List;
 
 @Configuration
@@ -24,23 +24,21 @@ public class DiscordConfig {
     }
 
     @Bean
-    public JDABuilder jdabuilder(SlashCommandHandler slashCommandHandler) {
+    public JDABuilder jdabuilder() {
         JDABuilder builder = JDABuilder.createDefault(botToken);
 
-        builder.enableIntents(GatewayIntent.MESSAGE_CONTENT);
+        builder.enableIntents(EnumSet.allOf(GatewayIntent.class)); // TODO: Specify only truly required intents in release version
 
         // Register event listeners
         listeners.forEach(builder::addEventListeners);
 
-        // Register slash command handler
-        builder.addEventListeners(slashCommandHandler);
         return builder;
     }
 
     @Bean
     public JDA jda(JDABuilder jdabuilder) {
         try {
-            return jdabuilder.build();
+            return jdabuilder.build(); // Run the bot
         } catch (InvalidTokenException e) {
             throw new RuntimeException("Could not authenticate!", e);
         }
