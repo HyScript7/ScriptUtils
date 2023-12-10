@@ -1,7 +1,6 @@
 package me.hyscript7.scriptutils.commandmng;
 
 import jakarta.annotation.PreDestroy;
-import me.hyscript7.scriptutils.modules.core.commands.PingCommand;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.slf4j.Logger;
