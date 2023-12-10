@@ -1,58 +1,29 @@
 package me.hyscript7.scriptutils.commandmng;
 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
-import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class SlashCommandHandler extends ListenerAdapter {
-    private final List<SlashCommand> slashCommands;
-    private boolean commandsSynced = false;
+
+    private final Map<String, SlashCommand> commands;
 
     @Autowired
     public SlashCommandHandler(List<SlashCommand> slashCommands) {
-        this.slashCommands = slashCommands;
-    }
-
-    @Override
-    public void onReady(ReadyEvent event) {
-        if (!commandsSynced) {
-            syncCommands(event);
+        this.commands = new HashMap<>(slashCommands.size());
+        // Cache commands
+        for (SlashCommand c :
+                slashCommands) {
+            String name = c.getCommandData().getName();
+            commands.put(name, c);
         }
     }
-
-    private List<List<SlashCommand>> partitionList(List<SlashCommand> list) {
-        List<List<SlashCommand>> partitions = new ArrayList<>();
-        for (int i = 0; i < list.size(); i += 100) {
-            int end = Math.min(i + 100, list.size());
-            partitions.add(list.subList(i, end));
-        }
-        return partitions;
-    }
-
-    private void syncCommands(ReadyEvent event) {
-        commandsSynced = true;
-        for (List<SlashCommand> partition :
-            partitionList(slashCommands)) {
-            CommandListUpdateAction commandListUpdateAction = event.getJDA().updateCommands();
-            for (SlashCommand command : partition) {
-                try {
-                    commandListUpdateAction = commandListUpdateAction.addCommands(command.getCommandData());
-                } catch (Exception e) {
-                    commandsSynced = false;
-                    throw e;
-                }
-            }
-            commandListUpdateAction.queue();
-        }
-    }
-
 
     @Override
     public void onSlashCommandInteraction(SlashCommandInteractionEvent event) {
@@ -66,13 +37,11 @@ public class SlashCommandHandler extends ListenerAdapter {
         String commandName = event.getName().toLowerCase();
 
         // Check if the command is registered
-        for (SlashCommand command : slashCommands) {
-            if (commandName.equals(command.getCommandData().getName())) {
-                command.execute(event);
-                return;
-            }
+        SlashCommand command = commands.get(commandName);
+        if (command == null) {
+            event.reply("Unknown command").setEphemeral(true).queue();
+            return;
         }
-
-        event.reply("Unknown command").setEphemeral(true).queue();
+        command.execute(event);
     }
 }
