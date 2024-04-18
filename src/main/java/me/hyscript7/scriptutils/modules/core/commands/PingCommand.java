@@ -1,6 +1,6 @@
 package me.hyscript7.scriptutils.modules.core.commands;
 
-import me.hyscript7.scriptutils.commandmng.SlashCommand;
+import me.hyscript7.scriptutils.managers.commands.SlashCommand;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;

@@ -1,4 +1,4 @@
-package me.hyscript7.scriptutils.commandmng;
+package me.hyscript7.scriptutils.managers.commands;
 
 import jakarta.annotation.PreDestroy;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;

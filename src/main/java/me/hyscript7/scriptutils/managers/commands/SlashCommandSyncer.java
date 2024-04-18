@@ -1,4 +1,4 @@
-package me.hyscript7.scriptutils.commandmng;
+package me.hyscript7.scriptutils.managers.commands;
 
 import net.dv8tion.jda.api.events.session.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
