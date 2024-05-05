@@ -1,4 +1,8 @@
-<h1 align="center">Welcome to ScriptUtils 👋</h1>
+<p align="center">
+<img alt="ScriptUtils Logo" src="images/logo.png" width="128px" height="auto" />
+</p>
+<h1 align="center">
+Welcome to ScriptUtils 👋</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
   <a href="https://tree.taiga.io/project/hyscript7-scriptutils/wiki/home" target="_blank">
@@ -39,15 +43,15 @@ or for a jar:
 
 👤 **HyScript7**
 
-* Github: [@HyScript7](https://github.com/HyScript7)
+- Github: [@HyScript7](https://github.com/HyScript7)
 
 👤 **SomeKristi**
 
-* Github: [@SomeKristi](https://github.com/SomeKriti)
+- Github: [@SomeKristi](https://github.com/SomeKriti)
 
 👤 **Hellstorm**
 
-* Github: [@Helstom](https://github.com/Helstom)
+- Github: [@Helstom](https://github.com/Helstom)
 
 ## 🤝 Contributing
 
@@ -57,5 +61,6 @@ Contributions, issues and feature requests are welcome!<br />Feel free to check 
 
 Give a ⭐️ if this project helped you!
 
-***
+---
+
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
